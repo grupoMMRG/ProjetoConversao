@@ -11,10 +11,10 @@
     <br>
     <div ng-controller="conversorController" class="geral">
         <div class="conversorController">
-            <input type="text" ng-model="amount" class="form-control">
+            <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
             <br>
             <label for="fromType"></label>
-                    <select class="form-control" id="fromType" ng-model="fromCurrency" ng-change="convert()" required>
+                    <select class="form-control" id="fromType" ng-model="fromCurrency" ng-change="convert()" required>        
                         <option value="USD">Estados Unidos, Dolar(USD)</option>
                         <option value="EUR">União Europeia, Euro(EUR)</option>
                         <option value="JPY">Japão, Iene Japonês(JPY)</option>
@@ -59,7 +59,7 @@
                         <option value="THB">Tailândia, Baht Tailandês(THB)</option>
                         <option value="UAH">Ucrânia, Hryvnia Ucraniana(UAH)</option>
                         <option value="VND">Vietnã, Dong Vietnamita(VND)</option>
-                        <option value="ZWL">Zimbábue, Dólar Zimbabuense(ZWL)</option>               
+                        <option value="ZWL">Zimbábue, Dólar Zimbabuense(ZWL)</option>
                     </select>
             <br>
     
