@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="conversorMoeda">
+<head>
+    <title>Conversor de Moedas</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div ng-controller="conversorController">
+        <label for="type">De:</label>
+                <select class="form-control" id="type" ng-model="fromCurrency" ng-change="changeType()" required>
+                    <option value="BRL">Real</option>
+                    <option value="USD">Dolar</option>
+                    <option value="JPY">Iene</option>
+                    <option value="EUR">Euro</option>
+                </select>
+        <br>
+
+        <label for="type">Para:</label>
+                <select class="form-control" id="type" ng-model="toCurrency" ng-change="changeType()" required>
+                    <option value="BRL">Real</option>
+                    <option value="USD">Dolar</option>
+                    <option value="JPY">Iene</option>
+                    <option value="EUR">Euro</option>
+                </select>
+        <br>
+
+        <label>Quantia: </label>
+        <input type="text" ng-model="amount">
+        <br>
+        <button ng-click="convert()">Converter</button>
+        <p>Resultado: {{result}}</p>
+    </div>
+</body>
+</html>
