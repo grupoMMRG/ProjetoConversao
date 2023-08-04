@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="conversorMoeda">
+
 <head>
     <title>Conversor de Moedas</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="titulo">1.Conversão Multimoeda</div>
     <br>
-    <div ng-controller="conversorController" class="geral">
+    <div ng-controller="conversorController" class="geralConversao">
         <div class="conversorController">
             <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
             <br>
@@ -18,36 +20,42 @@
                 <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
             </select>
             <br>
+            <button class="form-control" ng-click="inverterC()">Inverter</button>
             <label for="toType"></label>
             <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
                 <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
             </select>
-                    
             <br>
         </div>
         <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
     </div>
 
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-    <div class="titulo">Comparar a cotação do
-        Real frente as outras
-        moedas nos últimos X
-        dias</div>
+
+    <div class="titulo">Taxas de Câmbio Atualizadas</div>
     <br>
-    <div ng-controller="conversorController" class="geral">
+    <div ng-controller="conversorController" class="geralTaxa">
         <div class="conversorController">
-            <br>
-            <label for="fromType"></label>
-                <input class="form-control" value="BRL" disabled selected>
-            <br>
-            <label for="toType"></label>
-            <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
+            <label for="toTipo"></label>
+            <select id="toTipo" class="form-control" ng-model="toMoeda" ng-change="taxa()" required>
                 <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
             </select>
-                    
+            <br>
+            <button class="form-control" ng-click="inverterT()">Inverter</button>
+            <label for="toFrom"></label>
+            <select id="toFrom" class="form-control" ng-model="fromMoeda" ng-change="taxa()" required>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+            </select>
             <br>
         </div>
-        <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
+        <p ng-model="fromMoeda" class="resultado" value="">{{quotes[toMoeda + fromMoeda] | number:2 }} {{fromMoeda}}</p>
     </div>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <div class="titulo">Comparar a cotação do Real frente as outras moedas nos últimos X dias.</div>
+    <br>
+
 </body>
 </html>

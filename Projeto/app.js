@@ -6,7 +6,7 @@ app.controller('conversorController', function($scope, $http) {
         var url="https://api.apilayer.com/currency_data/list"
 
         var headers = {
-            "apikey": "6FFJUzjNmg3giqhHFd0ZTpUTcdjx1n9q"
+            "apikey": "28gZpx74ywbN5yPB6PucCT8PopFwHaHe"
         };
 
         $http({
@@ -24,8 +24,8 @@ app.controller('conversorController', function($scope, $http) {
     };
     $scope.SiglasMoeda();
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //1.conversão de moedas
     $scope.fromCurrency = 'USD';
     $scope.toCurrency = 'BRL';
     $scope.amount = 1;
@@ -39,7 +39,7 @@ app.controller('conversorController', function($scope, $http) {
         url += "&amount=" + $scope.amount;
         
         var headers = {
-            "apikey": "6FFJUzjNmg3giqhHFd0ZTpUTcdjx1n9q"
+            "apikey": "28gZpx74ywbN5yPB6PucCT8PopFwHaHe"
         };
 
         $http({
@@ -54,8 +54,64 @@ app.controller('conversorController', function($scope, $http) {
         });
     };
 
-    // Inicializar a conversão
     $scope.convert();
 
-    //2.Taxas de Câmbio Atualizadas:
+    $scope.inverterC = function() {
+        var temp = $scope.fromCurrency;
+        $scope.fromCurrency = $scope.toCurrency;
+        $scope.toCurrency = temp;
+    
+        $scope.convert();
+    };
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    $scope.fromMoeda = 'USD';
+    $scope.toMoeda = 'BRL';
+    $scope.quotes = null;
+
+    $scope.taxa = function() {
+        var url = "https://api.apilayer.com/currency_data/live";
+        url += "?source=" + $scope.toMoeda;
+        url += "&currencies=" + $scope.fromMoeda;
+
+
+        var headers = {
+            "apikey": "28gZpx74ywbN5yPB6PucCT8PopFwHaHe"
+        };
+
+        $http({
+            method: 'GET',
+            url: url,
+            headers: headers
+        }).then(function(response) {
+            console.log(response)
+            $scope.quotes = response.data.quotes;
+            console.log($scope.quotes)
+        }, function(error) {
+            console.log('error', error);
+        });
+    };
+
+    $scope.taxa();
+
+    // Botao com bug, testa ai
+
+    $scope.inverterT = function() {
+        var tempe = $scope.fromMoeda;
+        $scope.fromMoeda = $scope.toMoeda;
+        $scope.toMoeda = tempe;
+        
+    
+        $scope.convert();
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //funcao (Comparar a cotação do Real frente as outras moedas nos últimos X dias.)
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 });
