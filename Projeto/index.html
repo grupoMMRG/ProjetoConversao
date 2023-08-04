@@ -7,110 +7,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="titulo">Conversor de Moedas</div>
+    <div class="titulo">1.Conversão Multimoeda</div>
     <br>
     <div ng-controller="conversorController" class="geral">
         <div class="conversorController">
             <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
             <br>
             <label for="fromType"></label>
-                    <select class="form-control" id="fromType" ng-model="fromCurrency" ng-change="convert()" required>        
-                        <option value="USD">Estados Unidos, Dolar(USD)</option>
-                        <option value="EUR">União Europeia, Euro(EUR)</option>
-                        <option value="JPY">Japão, Iene Japonês(JPY)</option>
-                        <option value="GBP">Reino Unido, Libra Esterlina(GBP)</option>
-                        <option value="AUD">Austrália, Dólar Australiano(AUD)</option>
-                        <option value="CAD">Canadá, Dólar Canadense(CAD)</option>
-                        <option value="CHF">Suíça, Franco Suíço(CHF)</option>
-                        <option value="CNY">China, Yuan Chinês(CNY)</option>
-                        <option value="SEK">Suécia, Coroa Sueca(SEK)</option>
-                        <option value="NZD">Nova Zelândia, Dólar Neozelandês(NZD)</option>
-                        <option value="MXN">México, Peso Mexicano(MXN)</option>
-                        <option value="SGD">Singapura, Dólar de Singapura(SGD)</option>
-                        <option value="HKD">Hong Kong, Dólar de Hong Kong(HKD)</option>
-                        <option value="NOK">Noruega, Coroa Norueguesa(NOK)</option>
-                        <option value="KRW">Coreia do Sul, Won Sul-coreano(KRW)</option>
-                        <option value="TRY">Turquia, Lira Turca(TRY)</option>
-                        <option value="RUB">Rússia, Rublo Russo(RUB)</option>
-                        <option value="INR">Índia, Rupia Indiana(INR)</option>
-                        <option value="BRL">Brasil, Real Brasileiro(BRL)</option>
-                        <option value="ZAR">África do Sul, Rand Sul-africano(ZAR)</option>
-                        <option value="ARS">Argentina, Peso Argentino(ARS)</option>
-                        <option value="BDT">Bangladesh, Taka de Bangladesh(BDT)</option>
-                        <option value="CLP">Chile, Peso Chileno(CLP)</option>
-                        <option value="COP">Colômbia, Peso Colombiano(COP)</option>
-                        <option value="CZK">República Checa, Coroa Checa(CZK)</option>
-                        <option value="DKK">Dinamarca, Coroa Dinamarquesa(DKK)</option>
-                        <option value="EGP">Egito, Libra Egípcia(EGP)</option>
-                        <option value="HUF">Hungria, Forint Húngaro(HUF)</option>
-                        <option value="IDR">Indonésia, Rupia Indonésia(IDR)</option>
-                        <option value="ILS">Israel, Novo Shekel Israelense(ILS)</option>
-                        <option value="KES">Quênia, Xelim Queniano(KES)</option>
-                        <option value="LKR">Sri Lanka, Rupia do Sri Lanka(LKR)</option>
-                        <option value="MYR">Malásia, Ringgit Malaio(MYR)</option>
-                        <option value="NGN">Nigéria, Naira Nigeriana(NGN)</option>
-                        <option value="PEN">Peru, Sol Peruano(PEN)</option>
-                        <option value="PHP">Filipinas, Peso Filipino(PHP)</option>
-                        <option value="PKR">Paquistão, Rupia Paquistanesa(PKR)</option>
-                        <option value="PLN">Polônia, Złoty Polonês(PLN)</option>
-                        <option value="RON">Romênia, Leu Romeno(RON)</option>
-                        <option value="SAR">Arábia Saudita, Rial Saudita(SAR)</option>
-                        <option value="TWD">Taiwan, Dólar Taiwanês(TWD)</option>
-                        <option value="THB">Tailândia, Baht Tailandês(THB)</option>
-                        <option value="UAH">Ucrânia, Hryvnia Ucraniana(UAH)</option>
-                        <option value="VND">Vietnã, Dong Vietnamita(VND)</option>
-                        <option value="ZWL">Zimbábue, Dólar Zimbabuense(ZWL)</option>
-                    </select>
+            <select id="fromType" class="form-control" ng-model="fromCurrency" ng-change="convert()" required>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+            </select>
             <br>
-    
             <label for="toType"></label>
-                    <select class="form-control" id="toType" ng-model="toCurrency" ng-change="convert()" required>
-                        <option value="USD">Estados Unidos, Dolar(USD)</option>
-                        <option value="EUR">União Europeia, Euro(EUR)</option>
-                        <option value="JPY">Japão, Iene Japonês(JPY)</option>
-                        <option value="GBP">Reino Unido, Libra Esterlina(GBP)</option>
-                        <option value="AUD">Austrália, Dólar Australiano(AUD)</option>
-                        <option value="CAD">Canadá, Dólar Canadense(CAD)</option>
-                        <option value="CHF">Suíça, Franco Suíço(CHF)</option>
-                        <option value="CNY">China, Yuan Chinês(CNY)</option>
-                        <option value="SEK">Suécia, Coroa Sueca(SEK)</option>
-                        <option value="NZD">Nova Zelândia, Dólar Neozelandês(NZD)</option>
-                        <option value="MXN">México, Peso Mexicano(MXN)</option>
-                        <option value="SGD">Singapura, Dólar de Singapura(SGD)</option>
-                        <option value="HKD">Hong Kong, Dólar de Hong Kong(HKD)</option>
-                        <option value="NOK">Noruega, Coroa Norueguesa(NOK)</option>
-                        <option value="KRW">Coreia do Sul, Won Sul-coreano(KRW)</option>
-                        <option value="TRY">Turquia, Lira Turca(TRY)</option>
-                        <option value="RUB">Rússia, Rublo Russo(RUB)</option>
-                        <option value="INR">Índia, Rupia Indiana(INR)</option>
-                        <option value="BRL">Brasil, Real Brasileiro(BRL)</option>
-                        <option value="ZAR">África do Sul, Rand Sul-africano(ZAR)</option>
-                        <option value="ARS">Argentina, Peso Argentino(ARS)</option>
-                        <option value="BDT">Bangladesh, Taka de Bangladesh(BDT)</option>
-                        <option value="CLP">Chile, Peso Chileno(CLP)</option>
-                        <option value="COP">Colômbia, Peso Colombiano(COP)</option>
-                        <option value="CZK">República Checa, Coroa Checa(CZK)</option>
-                        <option value="DKK">Dinamarca, Coroa Dinamarquesa(DKK)</option>
-                        <option value="EGP">Egito, Libra Egípcia(EGP)</option>
-                        <option value="HUF">Hungria, Forint Húngaro(HUF)</option>
-                        <option value="IDR">Indonésia, Rupia Indonésia(IDR)</option>
-                        <option value="ILS">Israel, Novo Shekel Israelense(ILS)</option>
-                        <option value="KES">Quênia, Xelim Queniano(KES)</option>
-                        <option value="LKR">Sri Lanka, Rupia do Sri Lanka(LKR)</option>
-                        <option value="MYR">Malásia, Ringgit Malaio(MYR)</option>
-                        <option value="NGN">Nigéria, Naira Nigeriana(NGN)</option>
-                        <option value="PEN">Peru, Sol Peruano(PEN)</option>
-                        <option value="PHP">Filipinas, Peso Filipino(PHP)</option>
-                        <option value="PKR">Paquistão, Rupia Paquistanesa(PKR)</option>
-                        <option value="PLN">Polônia, Złoty Polonês(PLN)</option>
-                        <option value="RON">Romênia, Leu Romeno(RON)</option>
-                        <option value="SAR">Arábia Saudita, Rial Saudita(SAR)</option>
-                        <option value="TWD">Taiwan, Dólar Taiwanês(TWD)</option>
-                        <option value="THB">Tailândia, Baht Tailandês(THB)</option>
-                        <option value="UAH">Ucrânia, Hryvnia Ucraniana(UAH)</option>
-                        <option value="VND">Vietnã, Dong Vietnamita(VND)</option>
-                        <option value="ZWL">Zimbábue, Dólar Zimbabuense(ZWL)</option>         
-                    </select>
+            <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+            </select>
+                    
+            <br>
+        </div>
+        <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
+    </div>
+
+
+    <div class="titulo">Comparar a cotação do
+        Real frente as outras
+        moedas nos últimos X
+        dias</div>
+    <br>
+    <div ng-controller="conversorController" class="geral">
+        <div class="conversorController">
+            <br>
+            <label for="fromType"></label>
+                <input class="form-control" value="BRL" disabled selected>
+            <br>
+            <label for="toType"></label>
+            <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+            </select>
+                    
             <br>
         </div>
         <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
