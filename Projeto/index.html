@@ -56,6 +56,17 @@
 
     <div class="titulo">Comparar a cotação do Real frente as outras moedas nos últimos X dias.</div>
     <br>
+    <div ng-controller="conversorController" class="geralCotacao">
+        <div class="conversorController">
+            <input type="date" ng-model="dataComparacao" ng-change="FuncData()">
+            <br>
+            <label for="toTipo"></label>
+            <select id="toTipo" class="form-control" ng-model="fromMoedaComparacao1" ng-change="Comparacao1()" required>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+            </select>
+            <pbot class="resultado">{{result1}} {{fromMoedaComparacao1}}</p>
+        </div>
+    </div>
 
 </body>
 </html>

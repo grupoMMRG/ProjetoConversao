@@ -6,7 +6,7 @@ app.controller('conversorController', function($scope, $http) {
         var url="https://api.apilayer.com/currency_data/list"
 
         var headers = {
-            "apikey": "28gZpx74ywbN5yPB6PucCT8PopFwHaHe"
+            "apikey": "r60LyyS7OgcUADI4XUyfl0iQEdIFE4hT"
         };
 
         $http({
@@ -39,7 +39,7 @@ app.controller('conversorController', function($scope, $http) {
         url += "&amount=" + $scope.amount;
         
         var headers = {
-            "apikey": "28gZpx74ywbN5yPB6PucCT8PopFwHaHe"
+            "apikey": "r60LyyS7OgcUADI4XUyfl0iQEdIFE4hT"
         };
 
         $http({
@@ -77,7 +77,7 @@ app.controller('conversorController', function($scope, $http) {
 
 
         var headers = {
-            "apikey": "28gZpx74ywbN5yPB6PucCT8PopFwHaHe"
+            "apikey": "r60LyyS7OgcUADI4XUyfl0iQEdIFE4hT"
         };
 
         $http({
@@ -109,8 +109,61 @@ app.controller('conversorController', function($scope, $http) {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //funcao (Comparar a cotação do Real frente as outras moedas nos últimos X dias.)
+    var today = new Date();
+    $scope.dataComparacao = null;
 
+    $scope.FuncData = function(data) {
+        if (data) {  // Verifica se 'data' está definida
+            let dataObj = new Date(data);
+            var dia = String(dataObj.getDate()).padStart(2, '0');
+            var mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+            var ano = dataObj.getFullYear();
+            var dataFinal = ano + '-' + mes + '-' + dia;
+            return dataFinal;
+        } else {
+            return null;
+        }
+    }
 
+    
+    
+    $scope.Comparacao1 = function() {
+        var url = "https://api.exchangeratesapi.io/history"
+        $scope.$watch('dataComparacao', function(newVal) {
+            if (newVal) {
+                var data = $scope.FuncData(newVal)
+                url += "?start_at=" + data
+            }
+        });
+        url += "days_ago&end_at=" + $scope.FuncData(today)
+        $scope.$watch('fromMoedaComparacao1', function(newVal) {
+            if (newVal) {
+                var moeda = $scope.FuncData(newVal)
+                url += "&base=BRL&symbols=" + moeda
+            }
+        });
+
+        var headers = {
+            "apikey": "8ab06a190663d017ecd12752080bd44d"
+        };
+
+        $http({
+            method: 'GET',
+            url: url,
+            headers: headers
+        }).then(function(response) {
+            console.log(response.data)
+            $scope.result1 = response.data
+        }, function(error) {
+            console.log('error', error);
+        });
+    }
+
+    $scope.fromMoedaComparacao1 = 'USD';
+    $scope.resultComparacao1 = null;
+
+    console.log($scope.fromMoedaComparacao1)
+    $scope.Comparacao1()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
