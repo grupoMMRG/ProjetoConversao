@@ -33,3 +33,7 @@ body{
     box-sizing: border-box;
     padding: 20px 40px;
 }
+
+a {
+    text-decoration: none;
+}

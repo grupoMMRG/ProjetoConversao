@@ -5,10 +5,26 @@
     <title>Conversor de Moedas</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="app.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/26e8ab97af.js" crossorigin="anonymous"></script>
+    
 </head>
 
-<body>
+<body class="container">
+
+    <div class="titulo">Noticia investimentos carrocel </div>
+    <br>
+    <div ng-controller="conversorController" class="geralCotacao" ng-repeat="quote in quotes">
+        {{quote['01. symbol']}}
+        {{quote['10. change percent']}}
+        {{quote['05. price']}}
+    </div>
+
+    
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
     <div class="titulo">1.Conversão Multimoeda</div>
     <br>
     <div ng-controller="conversorController" class="geralConversao">
@@ -17,13 +33,13 @@
             <br>
             <label for="fromType"></label>
             <select id="fromType" class="form-control" ng-model="fromCurrency" ng-change="convert()" required>
-                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{chave}}</option>
             </select>
             <br>
-            <button class="form-control" ng-click="inverterC()">Inverter</button>
+            <i class="fa-solid fa-repeat" ng-click="inverterC()"></i>
             <label for="toType"></label>
             <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
-                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{chave}}</option>
             </select>
             <br>
         </div>
@@ -32,41 +48,43 @@
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-
-    <div class="titulo">Taxas de Câmbio Atualizadas</div>
+    <div class="titulo">Noticia investimentos 2 </div>
     <br>
-    <div ng-controller="conversorController" class="geralTaxa">
-        <div class="conversorController">
-            <label for="toTipo"></label>
-            <select id="toTipo" class="form-control" ng-model="toMoeda" ng-change="taxa()" required>
-                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
-            </select>
-            <br>
-            <button class="form-control" ng-click="inverterT()">Inverter</button>
-            <label for="toFrom"></label>
-            <select id="toFrom" class="form-control" ng-model="fromMoeda" ng-change="taxa()" required>
-                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
-            </select>
-            <br>
-        </div>
-        <p ng-model="fromMoeda" class="resultado" value="">{{quotes[toMoeda + fromMoeda] | number:2 }} {{fromMoeda}}</p>
+    <div ng-controller="conversorController" class="geralCotacao">
+        
     </div>
+    
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-    <div class="titulo">Comparar a cotação do Real frente as outras moedas nos últimos X dias.</div>
+    <div class="titulo">Noticia normal</div>
     <br>
-    <div ng-controller="conversorController" class="geralCotacao">
-        <div class="conversorController">
-            <input type="date" ng-model="dataComparacao" ng-change="FuncData()">
-            <br>
-            <label for="toTipo"></label>
-            <select id="toTipo" class="form-control" ng-model="fromMoedaComparacao1" ng-change="Comparacao1()" required>
-                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
-            </select>
-            <pbot class="resultado">{{result1}} {{fromMoedaComparacao1}}</p>
-        </div>
+    
+    <div ng-controller="conversorController" class="geralTaxa">
+    
+        <!-- Container para os cards -->
+        <div class="container">
+            <div class="row"> <!-- Esta é a linha que conterá todos os cards -->
+    
+                <div ng-repeat="noticia in noticias" class="col-md-3 mb-4"> <!-- Aqui, estamos usando col-md-3 para ter 4 cards por linha em telas médias. O mb-4 adiciona uma margem inferior a cada card -->
+    
+                    <a href="{{noticia.link}}" target="_blank">
+                        <div class="card h-100 d-flex flex-column" style="width: 100%;"> <!-- Adicionadas classes .h-100, .d-flex e .flex-column -->
+                            <img class="card-img-top" ng-src="{{noticia.imagens.image_intro}}" alt="Imagem da notícia">
+                            
+                            <div class="card-body flex-grow-1"> <!-- Adicionada classe .flex-grow-1 -->
+                                <h3 class="card-title">{{noticia.titulo}}</h3>
+                            </div>
+                        </div>
+                    </a>
+                    
+                </div> <!-- Fim da coluna do card -->
+    
+            </div> <!-- Fim da linha -->
+        </div> <!-- Fim do container -->
+    
     </div>
+    
 
 </body>
 </html>
