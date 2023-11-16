@@ -1,23 +1,6 @@
 var app = angular.module('conversorMoeda', []);
 
 app.controller('conversorController', function($scope, $http, $interval) {
-    
-    // const apiKey = '9de87b725c7c480ea32f3d9239aa7865';
-    //     const symbol = 'AAPL'; // You can replace this with the desired stock symbol
-    //     const url = `http://api.marketstack.com/v1/tickers/${symbol}/eod/latest?access_key=${apiKey}`;
-
-    //     fetch(url)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             const { symbol, close, open } = data.data; // Assume data.data contains the relevant fields
-    //             const change = close - open; // Calculate the change from open to close
-
-    //             // Update the HTML content with the new data
-    //             document.getElementById('symbol').textContent = symbol;
-    //             document.getElementById('close').textContent = close.toFixed(2);
-    //             document.getElementById('change').textContent = change.toFixed(2);
-    //         })
-    //         .catch(error => console.error('Error fetching data:', error));
 
     $scope.noticia_inv = function() {
         let moedas = ['IBOV.SA', 'USD', 'BTC', 'UE', 'BR','CNY', 'L'];
@@ -26,15 +9,24 @@ app.controller('conversorController', function($scope, $http, $interval) {
 
         moedas.forEach(function(moeda) {
             const symbol = 'AAPL';
-            var apiKey = "ee924075af5bdf65bb92ef2698d8d8c6"
-            var url = ` `;
+            var apiKey = "516fea54c935419c247466e2146723b4"
+            // var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=BTC`;
         
 
             $http({
                 method: 'GET',
                 url: url
             }).then(function(response) {
-                console.log(response); // Esta linha foi adicionada
+                console.log(response.data.data[0]); 
+                $scope.data_moeda = response.data.data[0]
+
+                $scope.calculatePercentageChange = function(open, close) {
+                    let change = close - open;
+                    let percentageChange = (change / open) * 100;
+                    return percentageChange.toFixed(2); // This will format the number to 2 decimal places
+                };
+        
+                $scope.data_moeda['percentageChange'] = $scope.calculatePercentageChange($scope.data_moeda['open'], $scope.data_moeda['close']);
             }, function(error) {
                 console.log('error', error);
             });
@@ -42,7 +34,7 @@ app.controller('conversorController', function($scope, $http, $interval) {
         
     };
 
-    $scope.noticia_inv();
+    // $scope.noticia_inv();
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

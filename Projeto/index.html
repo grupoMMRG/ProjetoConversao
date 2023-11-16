@@ -16,16 +16,12 @@
 
     <div class="titulo">Noticia investimentos carrocel </div>
     <br>
-    <div ng-controller="conversorController" class="geralCotacao" ng-repeat="quote in quotes">
-        {{quote['01. symbol']}}
-        {{quote['10. change percent']}}
-        {{quote['05. price']}}
-    </div>
-
-    <div id="market-data">
-        <p>Symbol: <span id="symbol"></span></p>
-        <p>Close: <span id="close"></span></p>
-        <p>Change from Open: <span id="change"></span></p>
+    <div ng-controller="conversorController" class="geralCotacao">
+        Symbol: {{data_moeda['symbol']}}
+        <br>
+        Close: {{data_moeda['close']}}
+        <br>
+        Percentage Change: {{data_moeda['percentageChange']}}%
     </div>
     <script>
     </script>
