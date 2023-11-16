@@ -1,23 +1,40 @@
 var app = angular.module('conversorMoeda', []);
 
-app.controller('conversorController', function($scope, $http) {
+app.controller('conversorController', function($scope, $http, $interval) {
     
+    // const apiKey = '9de87b725c7c480ea32f3d9239aa7865';
+    //     const symbol = 'AAPL'; // You can replace this with the desired stock symbol
+    //     const url = `http://api.marketstack.com/v1/tickers/${symbol}/eod/latest?access_key=${apiKey}`;
+
+    //     fetch(url)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             const { symbol, close, open } = data.data; // Assume data.data contains the relevant fields
+    //             const change = close - open; // Calculate the change from open to close
+
+    //             // Update the HTML content with the new data
+    //             document.getElementById('symbol').textContent = symbol;
+    //             document.getElementById('close').textContent = close.toFixed(2);
+    //             document.getElementById('change').textContent = change.toFixed(2);
+    //         })
+    //         .catch(error => console.error('Error fetching data:', error));
+
     $scope.noticia_inv = function() {
         let moedas = ['IBOV.SA', 'USD', 'BTC', 'UE', 'BR','CNY', 'L'];
         
         $scope.quotes = [];
 
         moedas.forEach(function(moeda) {
-            var url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${moeda}&apikey=X25X5M5L6OJAITS2`;
+            const symbol = 'AAPL';
+            var apiKey = "ee924075af5bdf65bb92ef2698d8d8c6"
+            var url = ` `;
         
+
             $http({
                 method: 'GET',
-                url: url,
+                url: url
             }).then(function(response) {
-                console.log("Resposta para moeda:", moeda, response.data); // Esta linha foi adicionada
-                if(response.data['Global Quote']) {
-                    $scope.quotes.push(response.data['Global Quote']);
-                }
+                console.log(response); // Esta linha foi adicionada
             }, function(error) {
                 console.log('error', error);
             });
@@ -34,7 +51,7 @@ app.controller('conversorController', function($scope, $http) {
         var url="https://api.apilayer.com/currency_data/list"
 
         var headers = {
-            "apikey": "r60LyyS7OgcUADI4XUyfl0iQEdIFE4hT"
+            "apikey": "OuyNqBwAKe3ZzObDEsQNvKP2WUry4Abw"
         };
 
         $http({
@@ -67,7 +84,7 @@ app.controller('conversorController', function($scope, $http) {
         url += "&amount=" + $scope.amount;
         
         var headers = {
-            "apikey": "r60LyyS7OgcUADI4XUyfl0iQEdIFE4hT"
+            "apikey": "OuyNqBwAKe3ZzObDEsQNvKP2WUry4Abw"
         };
 
         $http({
