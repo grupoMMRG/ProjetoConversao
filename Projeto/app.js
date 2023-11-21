@@ -8,19 +8,20 @@ app.controller('conversorController', function($scope, $http, $interval) {
         return percentageChange.toFixed(2); // This will format the number to 2 decimal places
     };
 
+    
     $scope.noticia_inv = function() {
-        let moedas = ['USD', 'BTC', 'UE', 'BR', 'CNY', 'L'];
+        let moedas = ['USD', 'BTC', 'UE', 'BR', 'CNY'];
         $scope.listaDadosMoedas = []; // Lista para armazenar os dados
     
-        moedas.forEach(function(moeda) {
+        moedas.forEach(function(moedas) {
             var apiKey = "fa3881987fb7cf742460f49b072506d9"
-            var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${moeda}`; // Alterado para usar a moeda da iteração
+            var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${moedas}`; // Alterado para usar a moeda da iteração
     
             $http({
                 method: 'GET',
                 url: url
             }).then(function(response) {
-                if(response.data.data && response.data.data.length > 0) {
+                if(response.data.data) {
                     let data_moeda = response.data.data[0];
                     data_moeda['percentageChange'] = $scope.calculatePercentageChange(data_moeda['open'], data_moeda['close']);
                     $scope.listaDadosMoedas.push(data_moeda); // Adicionando os dados na lista

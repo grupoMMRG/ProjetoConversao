@@ -33,17 +33,21 @@
     <div class="titulo">Conversor de Moedas</div>
 <br>
 <div ng-controller="conversorController" class="geralConversao">
+    <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
     <div class="conversorController">
-        <!-- Input movido para o início -->
-        <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
-        <br>
         
         <label for="fromType"></label>
         <select id="fromType" class="form-control" ng-model="fromCurrency" ng-change="convert()" required>
             <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
         </select>
         <br>
-        <i class="fa-solid fa-repeat" ng-click="inverterC()"></i>
+
+        <!-- Icone inverver -->
+        <div style="display: flex; align-items: center; height: 100px;">
+            <i class="fa-solid fa-repeat fa-2x" ng-click="inverterC()"></i>
+        </div>
+
+
         <label for="toType"></label>
         <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
             <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
@@ -55,19 +59,20 @@
     
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     
-    <div class="titulo">Noticia investimentos 2 </div>
-    <br>
+    <div class="titulo">Noticia Investimentos 2</div>
     <div ng-controller="conversorController" class="geralCotacao">
-        <div class="">
-            <div ng-repeat="moeda in listaDadosMoedas">
-                <div >{{moeda.symbol}}</div>
-                <div >{{moeda.high}}</div>
-                <div >{{moeda.low}}</div>
-                <div >{{moeda.close}}</div>
-                <div ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">{{moeda.percentageChange}}%</div>
+        <!-- ng-repeat irá iterar sobre cada moeda na lista listaDadosMoedas -->
+        <div ng-repeat="moeda in listaDadosMoedas" class="moeda-container">
+            <div class="moeda-info">{{listaDadosMoedas.symbol}}</div>
+            <div class="moeda-info">{{moeda.high}}</div>
+            <div class="moeda-info">{{moeda.low}}</div>
+            <div class="moeda-info">{{moeda.close}}</div>
+            <div class="moeda-info" ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">
+                {{moeda.percentageChange}}%
             </div>
+        </div>
     </div>
-    </div>
+
     
     
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -103,7 +108,7 @@
     </div>
 </main>
 
-
+<footer class="footer"></footer>
 
 </body>
 
