@@ -12,84 +12,97 @@
 
 </head>
 
-<body class="container">
-
-    <div class="titulo">Noticia investimentos carrocel </div>
-    <br>
-    <div ng-controller="conversorController" class="geralCotacao">
-        Symbol: {{data_moeda['symbol']}}
-        <br>
-        Close: {{data_moeda['close']}}
-        <br>
-        Percentage Change: {{data_moeda['percentageChange']}}%
-    </div>
-    <script>
-    </script>
-
-
-    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-
-    <div class="titulo">1.Conversão Multimoeda</div>
-    <br>
-    <div ng-controller="conversorController" class="geralConversao">
-        <div class="conversorController">
-            <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
-            <br>
-            <label for="fromType"></label>
-            <select id="fromType" class="form-control" ng-model="fromCurrency" ng-change="convert()" required>
-                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
-            </select>
-            <br>
-            <i class="fa-solid fa-repeat" ng-click="inverterC()"></i>
-            <label for="toType"></label>
-            <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
-                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
-            </select>
-            <br>
+<body>
+    <header class="cabeçalho">
+        <div ng-controller="conversorController" class="geralCotacao">
+            <div class="ticker">
+                    <div class="ticker-item" ng-repeat="moeda in listaDadosMoedas">
+                        <div class="currency-name">{{moeda.symbol}}</div>
+                        <div class="currency-info">
+                            <div class="currency-value">{{moeda.close}}</div>
+                            <div class="currency-change" ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">{{moeda.percentageChange}}%</div>
+                        </div>
+                    </div>
+            </div>
         </div>
-        <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
+    </header>
+
+<main class="container">
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    
+    <div class="titulo">Conversor de Moedas</div>
+<br>
+<div ng-controller="conversorController" class="geralConversao">
+    <div class="conversorController">
+        <!-- Input movido para o início -->
+        <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
+        <br>
+        
+        <label for="fromType"></label>
+        <select id="fromType" class="form-control" ng-model="fromCurrency" ng-change="convert()" required>
+            <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+        </select>
+        <br>
+        <i class="fa-solid fa-repeat" ng-click="inverterC()"></i>
+        <label for="toType"></label>
+        <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
+            <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+        </select>
+        <br>
     </div>
-
+    <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
+</div>
+    
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
+    
     <div class="titulo">Noticia investimentos 2 </div>
     <br>
     <div ng-controller="conversorController" class="geralCotacao">
-
+        <div class="">
+            <div ng-repeat="moeda in listaDadosMoedas">
+                <div >{{moeda.symbol}}</div>
+                <div >{{moeda.high}}</div>
+                <div >{{moeda.low}}</div>
+                <div >{{moeda.close}}</div>
+                <div ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">{{moeda.percentageChange}}%</div>
+            </div>
     </div>
-
-
+    </div>
+    
+    
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
+    
     <div class="titulo">Noticia normal</div>
     <br>
-
+    
     <div ng-controller="conversorController" class="geralTaxa">
-
+    
         <!-- Container para os cards -->
         <div class="container">
             <div class="row"> <!-- Esta é a linha que conterá todos os cards -->
-
+    
                 <div ng-repeat="noticia in noticias" class="col-md-3 mb-4">
                     <!-- Aqui, estamos usando col-md-3 para ter 4 cards por linha em telas médias. O mb-4 adiciona uma margem inferior a cada card -->
-
+    
                     <a href="{{noticia.link}}" target="_blank">
                         <div class="card h-100 d-flex flex-column" style="width: 100%;">
                             <!-- Adicionadas classes .h-100, .d-flex e .flex-column -->
                             <img class="card-img-top" ng-src="{{noticia.imagens.image_intro}}" alt="Imagem da notícia">
-
+    
                             <div class="card-body flex-grow-1"> <!-- Adicionada classe .flex-grow-1 -->
                                 <h3 class="card-title">{{noticia.titulo}}</h3>
                             </div>
                         </div>
                     </a>
-
+    
                 </div> <!-- Fim da coluna do card -->
-
+    
             </div> <!-- Fim da linha -->
         </div> <!-- Fim do container -->
-
+    
     </div>
+</main>
+
 
 
 </body>

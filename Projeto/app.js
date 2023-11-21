@@ -2,39 +2,36 @@ var app = angular.module('conversorMoeda', []);
 
 app.controller('conversorController', function($scope, $http, $interval) {
 
+    $scope.calculatePercentageChange = function(open, close) {
+        let change = close - open;
+        let percentageChange = (change / open) * 100;
+        return percentageChange.toFixed(2); // This will format the number to 2 decimal places
+    };
+
     $scope.noticia_inv = function() {
-        let moedas = ['IBOV.SA', 'USD', 'BTC', 'UE', 'BR','CNY', 'L'];
-        
-        $scope.quotes = [];
-
+        let moedas = ['USD', 'BTC', 'UE', 'BR', 'CNY', 'L'];
+        $scope.listaDadosMoedas = []; // Lista para armazenar os dados
+    
         moedas.forEach(function(moeda) {
-            const symbol = 'AAPL';
-            var apiKey = "516fea54c935419c247466e2146723b4"
-            // var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=BTC`;
-        
-
+            var apiKey = "fa3881987fb7cf742460f49b072506d9"
+            var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${moeda}`; // Alterado para usar a moeda da iteração
+    
             $http({
                 method: 'GET',
                 url: url
             }).then(function(response) {
-                console.log(response.data.data[0]); 
-                $scope.data_moeda = response.data.data[0]
-
-                $scope.calculatePercentageChange = function(open, close) {
-                    let change = close - open;
-                    let percentageChange = (change / open) * 100;
-                    return percentageChange.toFixed(2); // This will format the number to 2 decimal places
-                };
-        
-                $scope.data_moeda['percentageChange'] = $scope.calculatePercentageChange($scope.data_moeda['open'], $scope.data_moeda['close']);
+                if(response.data.data && response.data.data.length > 0) {
+                    let data_moeda = response.data.data[0];
+                    data_moeda['percentageChange'] = $scope.calculatePercentageChange(data_moeda['open'], data_moeda['close']);
+                    $scope.listaDadosMoedas.push(data_moeda); // Adicionando os dados na lista
+                }
             }, function(error) {
                 console.log('error', error);
             });
         });
-        
     };
 
-    // $scope.noticia_inv();
+    //$scope.noticia_inv();
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
