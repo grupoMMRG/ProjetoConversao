@@ -13,22 +13,27 @@ app.controller('conversorController', function($scope, $http, $interval) {
         let moedas = ['USD', 'BTC', 'UE', 'BR', 'CNY'];
         $scope.listaDadosMoedas = []; // Lista para armazenar os dados
     
-        moedas.forEach(function(moedas) {
-            var apiKey = "fa3881987fb7cf742460f49b072506d9"
-            var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${moedas}`; // Alterado para usar a moeda da iteração
+        let promises = moedas.map(moeda => {
+            var apiKey = "fa3881987fb7cf742460f49b072506d9";
+            var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${moeda}`;
     
-            $http({
+            return $http({
                 method: 'GET',
                 url: url
-            }).then(function(response) {
+            }).then(response => {
                 if(response.data.data) {
                     let data_moeda = response.data.data[0];
                     data_moeda['percentageChange'] = $scope.calculatePercentageChange(data_moeda['open'], data_moeda['close']);
-                    $scope.listaDadosMoedas.push(data_moeda); // Adicionando os dados na lista
+                    return data_moeda;
                 }
-            }, function(error) {
+            }).catch(error => {
                 console.log('error', error);
             });
+        });
+    
+        Promise.all(promises).then(results => {
+            $scope.listaDadosMoedas = results.filter(data_moeda => data_moeda != null);
+            console.log($scope.listaDadosMoedas);
         });
     };
 
@@ -41,7 +46,7 @@ app.controller('conversorController', function($scope, $http, $interval) {
         var url="https://api.apilayer.com/currency_data/list"
 
         var headers = {
-            "apikey": "OuyNqBwAKe3ZzObDEsQNvKP2WUry4Abw"
+            "apikey": "6FFJUzjNmg3giqhHFd0ZTpUTcdjx1n9q"
         };
 
         $http({
@@ -74,7 +79,7 @@ app.controller('conversorController', function($scope, $http, $interval) {
         url += "&amount=" + $scope.amount;
         
         var headers = {
-            "apikey": "OuyNqBwAKe3ZzObDEsQNvKP2WUry4Abw"
+            "apikey": "6FFJUzjNmg3giqhHFd0ZTpUTcdjx1n9q"
         };
 
         $http({
@@ -157,4 +162,42 @@ $scope.taxa();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    $scope.OutrosDados_inv = function() {
+        var apiKey = "cc62f786dbf573666ffd8275a0768315";
+        var urlUSD = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=USD`;
+        var urlBTC = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=BTC`;
+        //var urlUE = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=EUR`;
+        // var urlBR = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=BRL`;
+        // var urlCNY = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=CNY`;
+        // var urlL = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=GBP`;
+    
+        Promise.all([
+            $http.get(urlUSD),
+            $http.get(urlBTC),
+            // $http.get(urlUE),
+            // $http.get(urlBR),
+            // $http.get(urlCNY),
+            // $http.get(urlL)
+        ]).then(responses => {
+            $scope.DadosMoedasUSD = [responses[0].data.data[0]];
+            $scope.DadosMoedasBTC = [responses[1].data.data[0]];
+            // $scope.DadosMoedasUE = [responses[2].data.data[0]];
+            // $scope.DadosMoedasBR = [responses[3].data.data[0]];
+            // $scope.DadosMoedasCNY = [responses[4].data.data[0]];
+            // $scope.DadosMoedasL = [responses[5].data.data[0]];
+    
+            // Calcular mudança percentual para cada moeda
+            $scope.DadosMoedasUSD[0]['percentageChange'] = $scope.calculatePercentageChange($scope.DadosMoedasUSD[0]['open'], $scope.DadosMoedasUSD[0]['close']);
+            $scope.DadosMoedasBTC[0]['percentageChange'] = $scope.calculatePercentageChange($scope.DadosMoedasBTC[0]['open'], $scope.DadosMoedasBTC[0]['close']);
+            // $scope.DadosMoedasUE[0]['percentageChange'] = $scope.calculatePercentageChange($scope.DadosMoedasUE[0]['open'], $scope.DadosMoedasUE[0]['close']);
+            // $scope.DadosMoedasBR[0]['percentageChange'] = $scope.calculatePercentageChange($scope.DadosMoedasBR[0]['open'], $scope.DadosMoedasBR[0]['close']);
+            // $scope.DadosMoedasCNY[0]['percentageChange'] = $scope.calculatePercentageChange($scope.DadosMoedasCNY[0]['open'], $scope.DadosMoedasCNY[0]['close']);
+            // $scope.DadosMoedasL[0]['percentageChange'] = $scope.calculatePercentageChange($scope.DadosMoedasL[0]['open'], $scope.DadosMoedasL[0]['close']);
+        }).catch(error => {
+            console.log('error', error);
+        });
+    };
+    
+    //$scope.OutrosDados_inv();
+    
 });

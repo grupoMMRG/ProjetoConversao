@@ -5,11 +5,12 @@
     <title>Conversor de Moedas</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="app.js"></script>
+    <script src="app2.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/26e8ab97af.js" crossorigin="anonymous"></script>
-
+    
 </head>
 
 <body>
@@ -20,59 +21,244 @@
                         <div class="currency-name">{{moeda.symbol}}</div>
                         <div class="currency-info">
                             <div class="currency-value">{{moeda.close}}</div>
-                            <div class="currency-change" ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">{{moeda.percentageChange}}%</div>
+                            <div class="currency-change" ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">
+                                {{moeda.percentageChange}}%
+                            </div>
                         </div>
                     </div>
             </div>
         </div>
     </header>
+    
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
 <main class="container">
-    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-    
+
+    <a href="https://pt.wikipedia.org/wiki/Caf%C3%A9" target="_blank"><img src="anuncio1.png" alt="" id="coffeeShopAd"></a>
+    <a href="https://pt.wikipedia.org/wiki/Caf%C3%A9" target="_blank"><img src="anuncio2.png" alt="" id="coffeeShopAd2"></a>
     <div class="titulo">Conversor de Moedas</div>
-<br>
-<div ng-controller="conversorController" class="geralConversao">
-    <input type="text" ng-model="amount" class="form-control" ng-change="convert()">
-    <div class="conversorController">
-        
-        <label for="fromType"></label>
-        <select id="fromType" class="form-control" ng-model="fromCurrency" ng-change="convert()" required>
-            <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
-        </select>
-        <br>
-
-        <!-- Icone inverver -->
-        <div style="display: flex; align-items: center; height: 100px;">
-            <i class="fa-solid fa-repeat fa-2x" ng-click="inverterC()"></i>
+    <br>
+    <div ng-controller="conversorController" class="geralConversao">
+        <div class="input-container">
+            <input type="text" ng-model="amount" class="form-control form-control-valor" ng-change="convert()">
         </div>
+        <div class="conversorController">
+            <label for="fromType"></label>
+            <select id="fromType" class="form-control" ng-model="fromCurrency" ng-change="convert()" required>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+            </select>
+            <br>
+
+            <!-- Icone inverver -->
+            <div style="display: flex; align-items: center; height: 100px;">
+                <i class="fa-solid fa-repeat fa-2x" ng-click="inverterC()"></i>
+            </div>
 
 
-        <label for="toType"></label>
-        <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
-            <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
-        </select>
-        <br>
+            <label for="toType"></label>
+            <select id="toType" class="form-control" ng-model="toCurrency" ng-change="convert()" required>
+                <option ng-repeat="(chave, valor) in moedas" value="{{chave}}">{{valor}} ({{chave}})</option>
+            </select>
+            
+            <br>
+        </div>
+        <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
     </div>
-    <p ng-model="fromCurrency" class="resultado">{{result | number:2}} {{toCurrency}}</p>
-</div>
     
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    
-    <div class="titulo">Noticia Investimentos 2</div>
-    <div ng-controller="conversorController" class="geralCotacao">
-        <!-- ng-repeat irá iterar sobre cada moeda na lista listaDadosMoedas -->
-        <div ng-repeat="moeda in listaDadosMoedas" class="moeda-container">
-            <div class="moeda-info">{{listaDadosMoedas.symbol}}</div>
-            <div class="moeda-info">{{moeda.high}}</div>
-            <div class="moeda-info">{{moeda.low}}</div>
-            <div class="moeda-info">{{moeda.close}}</div>
-            <div class="moeda-info" ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">
-                {{moeda.percentageChange}}%
+
+    <div ng-controller="conversorController" class="geralCotacao inv2">
+        <div class="cotacoes-container">
+            <div class="moeda-container">
+                <div class="moeda-nome">
+                    <div class="moeda-info">{{DadosMoedasUSD[0].symbol}} GOGL</div>
+                </div>
+                <div class="moeda-data">
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Alta</h6>
+                            <div class="moeda-info">{{DadosMoedasUSD[0].high}} 7.95</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Baixa</h6>
+                            <div class="moeda-info">{{DadosMoedasUSD[0].low}} 7.79</div>
+                        </div>
+                    </div>
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Fechamento</h6>
+                            <div class="moeda-info">{{DadosMoedasUSD[0].close}} 7.83</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Porcentagem</h6>
+                            <div class="moeda-info moeda-info-change" ng-class="{'positive': DadosMoedasUSD[0].percentageChange > 0, 'negative': DadosMoedasUSD[0].percentageChange < 0}">
+                                {{DadosMoedasUSD[0].percentageChange}}-1.50%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="moeda-container">
+                <div class="moeda-nome">
+                    <div class="moeda-info">{{DadosMoedasBTC[0].symbol}} AAPL</div>
+                </div>
+                <div class="moeda-data">
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Alta</h6>
+                            <div class="moeda-info">{{DadosMoedasBTC[0].high}} 191.5</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Baixa</h6>
+                            <div class="moeda-info">{{DadosMoedasBTC[0].low}} 189.74</div>
+                        </div>
+                    </div>
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Fechamento</h6>
+                            <div class="moeda-info">{{DadosMoedasBTC[0].close}} 190.64</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Porcentagem</h6>
+                            <div class="moeda-info moeda-info-change" ng-class="{'positive': DadosMoedasBTC[0].percentageChange > 0, 'negative': DadosMoedasBTC[0].percentageChange < 0}">
+                                {{DadosMoedasBTC[0].percentageChange}} -0.44%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div ng-controller="conversorController" class="geralCotacao inv2">
+        <div class="cotacoes-container">
+            <div class="moeda-container">
+                <div class="moeda-nome">
+                    <div class="moeda-info">{{DadosMoedasUE[0].symbol}} MSFT</div>
+                </div>
+                <div class="moeda-data">
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Alta</h6>
+                            <div class="moeda-info">{{DadosMoedasUE[0].high}} 376.22</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Baixa</h6>
+                            <div class="moeda-info">{{DadosMoedasUE[0].low}} 371.12</div>
+                        </div>
+                    </div>
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Fechamento</h6>
+                            <div class="moeda-info">{{DadosMoedasUE[0].close}} 373.07</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Porcentagem</h6>
+                            <div class="moeda-info moeda-info-change" ng-class="{'positive': DadosMoedasUE[0].percentageChange > 0, 'negative': DadosMoedasUE[0].percentageChange < 0}">
+                                {{DadosMoedasUE[0].percentageChange}} -0.83%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="moeda-container">
+                <div class="moeda-nome">
+                    <div class="moeda-info">{{DadosMoedasBR[0].symbol}} NVDA</div>
+                </div>
+                <div class="moeda-data">
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Alta</h6>
+                            <div class="moeda-info">{{DadosMoedasBR[0].high}} 505.17</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Baixa</h6>
+                            <div class="moeda-info">{{DadosMoedasBR[0].low}} 492.22</div>
+                        </div>
+                    </div>
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Fechamento</h6>
+                            <div class="moeda-info">{{DadosMoedasBR[0].close}} 499.44</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Porcentagem</h6>
+                            <div class="moeda-info moeda-info-change" ng-class="{'positive': DadosMoedasBR[0].percentageChange > 0, 'negative': DadosMoedasBR[0].percentageChange < 0}">
+                                {{DadosMoedasBR[0].percentageChange}} -1.13%
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <div ng-controller="conversorController" class="geralCotacao inv2">
+        <div class="cotacoes-container">
+            <div class="moeda-container">
+                <div class="moeda-nome">
+                    <div class="moeda-info">{{DadosMoedasCNY[0].symbol}} AMZN</div>
+                </div>
+                <div class="moeda-data">
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Alta</h6>
+                            <div class="moeda-info">{{DadosMoedasCNY[0].high}} 144.05</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Baixa</h6>
+                            <div class="moeda-info">{{DadosMoedasCNY[0].low}} 141.5</div>
+                        </div>
+                    </div>
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Fechamento</h6>
+                            <div class="moeda-info">{{DadosMoedasCNY[0].close}} 143.9</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Porcentagem</h6>
+                            <div class="moeda-info moeda-info-change" ng-class="{'positive': DadosMoedasCNY[0].percentageChange > 0, 'negative': DadosMoedasCNY[0].percentageChange < 0}">
+                                {{DadosMoedasCNY[0].percentageChange}} -0,10%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="moeda-container">
+                <div class="moeda-nome">
+                    <div class="moeda-info">{{DadosMoedasL[0].symbol}} BBY</div>
+                </div>
+                <div class="moeda-data">
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Alta</h6>
+                            <div class="moeda-info">{{DadosMoedasL[0].high}} 68.05</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Baixa</h6>
+                            <div class="moeda-info">{{DadosMoedasL[0].low}} 62.92</div>
+                        </div>
+                    </div>
+                    <div class="moeda-data-pair">
+                        <div class="moeda-data-item">
+                            <h6>Fechamento</h6>
+                            <div class="moeda-info">{{DadosMoedasL[0].close}} 67.62</div>
+                        </div>
+                        <div class="moeda-data-item">
+                            <h6>Porcentagem</h6>
+                            <div class="moeda-info moeda-info-change" ng-class="{'positive': DadosMoedasL[0].percentageChange > 0, 'negative': DadosMoedasL[0].percentageChange < 0}">
+                                {{DadosMoedasL[0].percentageChange}} -0.63%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -107,8 +293,6 @@
     
     </div>
 </main>
-
-<footer class="footer"></footer>
 
 </body>
 
