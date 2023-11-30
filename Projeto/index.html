@@ -16,16 +16,10 @@
 <body>
     <header class="cabeçalho">
         <div ng-controller="conversorController" class="geralCotacao">
-            <div class="ticker">
-                    <div class="ticker-item" ng-repeat="moeda in listaDadosMoedas">
-                        <div class="currency-name">{{moeda.symbol}}</div>
-                        <div class="currency-info">
-                            <div class="currency-value">{{moeda.close}}</div>
-                            <div class="currency-change" ng-class="{'positive': moeda.percentageChange > 0, 'negative': moeda.percentageChange < 0}">
-                                {{moeda.percentageChange}}%
-                            </div>
-                        </div>
-                    </div>
+            <div class="conversoes-moeda">
+                <div ng-repeat="(chave, valor) in valoresEmBRL">
+                    <p>1 {{chave}} = {{valor | number:2}} BRL</p>
+                </div>
             </div>
         </div>
     </header>
@@ -263,7 +257,7 @@
     
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     
-    <div class="titulo">Noticia normal</div>
+    <div class="titulo">Destaques</div>
     <br>
     
     <div ng-controller="conversorController" class="geralTaxa">

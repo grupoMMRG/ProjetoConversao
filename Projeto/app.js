@@ -2,42 +2,70 @@ var app = angular.module('conversorMoeda', []);
 
 app.controller('conversorController', function($scope, $http, $interval) {
 
-    $scope.calculatePercentageChange = function(open, close) {
-        let change = close - open;
-        let percentageChange = (change / open) * 100;
-        return percentageChange.toFixed(2); // This will format the number to 2 decimal places
-    };
+    // $scope.calculatePercentageChange = function(open, close) {
+    //     let change = close - open;
+    //     let percentageChange = (change / open) * 100;
+    //     return percentageChange.toFixed(2); // This will format the number to 2 decimal places
+    // };
 
     
-    $scope.noticia_inv = function() {
-        let moedas = ['USD', 'BTC', 'UE', 'BR', 'CNY'];
-        $scope.listaDadosMoedas = []; // Lista para armazenar os dados
+    // $scope.noticia_inv = function() {
+    //     let moedas = ['USD', 'BTC', 'UE', 'BR', 'CNY'];
+    //     $scope.listaDadosMoedas = []; // Lista para armazenar os dados
     
-        let promises = moedas.map(moeda => {
-            var apiKey = "fa3881987fb7cf742460f49b072506d9";
-            var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${moeda}`;
+    //     let promises = moedas.map(moeda => {
+    //         var apiKey = "fa3881987fb7cf742460f49b072506d9";
+    //         var url = `https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${moeda}`;
     
-            return $http({
-                method: 'GET',
-                url: url
-            }).then(response => {
-                if(response.data.data) {
-                    let data_moeda = response.data.data[0];
-                    data_moeda['percentageChange'] = $scope.calculatePercentageChange(data_moeda['open'], data_moeda['close']);
-                    return data_moeda;
-                }
-            }).catch(error => {
-                console.log('error', error);
-            });
-        });
+    //         return $http({
+    //             method: 'GET',
+    //             url: url
+    //         }).then(response => {
+    //             if(response.data.data) {
+    //                 let data_moeda = response.data.data[0];
+    //                 data_moeda['percentageChange'] = $scope.calculatePercentageChange(data_moeda['open'], data_moeda['close']);
+    //                 return data_moeda;
+    //             }
+    //         }).catch(error => {
+    //             console.log('error', error);
+    //         });
+    //     });
     
-        Promise.all(promises).then(results => {
-            $scope.listaDadosMoedas = results.filter(data_moeda => data_moeda != null);
-            console.log($scope.listaDadosMoedas);
+    //     Promise.all(promises).then(results => {
+    //         $scope.listaDadosMoedas = results.filter(data_moeda => data_moeda != null);
+    //         console.log($scope.listaDadosMoedas);
+    //     });
+    // };
+
+    // $scope.noticia_inv();
+
+    $scope.converterMoedasEspecificasParaBRL = function() {
+        let moedas = ['USD', 'BTC', 'EUR', 'BRL', 'CNY']; // Adicione ou remova as moedas conforme necessário
+        $scope.valoresEmBRL = {};
+    
+        moedas.forEach(moeda => {
+            if (moeda !== 'BRL') { // Não precisa converter se já for BRL
+                $http({
+                    method: 'GET',
+                    url: "https://api.apilayer.com/currency_data/convert",
+                    headers: {
+                        "apikey": "6FFJUzjNmg3giqhHFd0ZTpUTcdjx1n9q"
+                    },
+                    params: {
+                        to: 'BRL',
+                        from: moeda,
+                        amount: 1
+                    }
+                }).then(function(response) {
+                    $scope.valoresEmBRL[moeda] = response.data.result;
+                }, function(error) {
+                    console.log('error', error);
+                });
+            }
         });
     };
-
-    //$scope.noticia_inv();
+    
+    $scope.converterMoedasEspecificasParaBRL();
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
