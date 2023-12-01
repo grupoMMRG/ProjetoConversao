@@ -16,13 +16,16 @@
 <body>
     <header class="cabeçalho">
         <div ng-controller="conversorController" class="geralCotacao">
-            <div class="conversoes-moeda">
-                <div ng-repeat="(chave, valor) in valoresEmBRL">
-                    <p>1 {{chave}} = {{valor | number:2}} BRL</p>
+            <div class="currency-container">
+                <!-- Repeat this block for each currency -->
+                <div class="currency-item" ng-repeat="(chave, valor) in valoresEmBRL">
+                    <p class="currency-code">{{chave}}</p>
+                    <p class="currency-value">{{valor | number:2}} BRL</p>
                 </div>
             </div>
         </div>
     </header>
+    
     
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
@@ -30,7 +33,6 @@
 
     <a href="https://pt.wikipedia.org/wiki/Caf%C3%A9" target="_blank"><img src="anuncio1.png" alt="" id="coffeeShopAd"></a>
     <a href="https://pt.wikipedia.org/wiki/Caf%C3%A9" target="_blank"><img src="anuncio2.png" alt="" id="coffeeShopAd2"></a>
-    <div class="titulo">Conversor de Moedas</div>
     <br>
     <div ng-controller="conversorController" class="geralConversao">
         <div class="input-container">

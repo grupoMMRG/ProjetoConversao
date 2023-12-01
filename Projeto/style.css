@@ -39,6 +39,7 @@ body{
 .input-container {
     display: flex;
     justify-content: center;
+    padding-top: 20px;
 }
 
 .form-control-valor {
@@ -230,3 +231,54 @@ h6, .moeda-info {
     border: 1px solid #000; /* opcional, para adicionar uma borda */
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* opcional, para adicionar sombra */
 }
+
+/* Container for all currencies */
+.currency-container {
+    display: flex; /* Enables flexbox */
+    flex-direction: row; /* Aligns children in a row */
+    justify-content: center; /* Horizontally center items */
+    align-items: center; /* Vertically center items */
+    flex-wrap: wrap; /* Allows items to wrap in smaller screens */
+    padding: 10px; /* Optional: adds padding inside the container */
+}
+
+/* Individual currency element */
+.currency-item {
+    display: flex; /* Enables flexbox within each item */
+    flex-direction: column; /* Stacks children vertically */
+    justify-content: center; /* Vertically center content in the item */
+    align-items: center; /* Horizontally center content in the item */
+    flex: 1; /* Flex-grow to distribute space */
+    margin: 10px; /* Margin around each item */
+    min-width: 150px; /* Minimum width for each item */
+    border-right: 2px solid #a09f9f; /* Adds border to the right side */
+}
+
+/* Removes the right border for the last item in a row */
+.currency-item:last-child {
+    border-right: none;
+}
+
+/* Center align text in <p> elements */
+.currency-item p {
+    text-align: center; /* Center align text */
+    margin: 0; /* Remove default margin */
+    padding: 5px; /* Optional: adds padding around the text */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .currency-container {
+        flex-direction: column; /* Stack items vertically on small screens */
+    }
+    .currency-item {
+        border-right: none; /* Removes border for smaller screens */
+    }
+}
+/* .currency-code {
+    background-color: #3bdf5e; /* Light blue background color */
+    padding: 5px; /* Padding for aesthetic spacing */
+    border-radius: 25px; /* Optional: adds rounded corners */
+    margin: 0; /* Remove default margin */
+    /* Add other styling as needed */
+} */
